@@ -8,6 +8,7 @@ public class RazorpayApplication {
 
 	public static void main(String[] args) {
 		SpringApplication.run(RazorpayApplication.class, args);
+		System.out.println("Razorpay Application is running...");
 	}
 
 }
