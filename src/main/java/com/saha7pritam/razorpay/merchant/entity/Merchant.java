@@ -11,7 +11,8 @@ import java.util.UUID;
 @Table(name = "merchant")
 public class Merchant {
 
-    @Id(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     @Column(nullable = false, length = 255)
