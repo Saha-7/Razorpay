@@ -10,7 +10,7 @@ import java.util.UUID;
 public class Customer {
 
     @Id
-    @GeneratedValue(strategy = jakarta.persistence.GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private UUID id;
 
     @ManyToOne(fetch=FetchType.LAZY, optional = false)
