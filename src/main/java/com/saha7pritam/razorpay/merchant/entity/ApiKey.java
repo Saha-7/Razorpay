@@ -1,10 +1,7 @@
 package com.saha7pritam.razorpay.merchant.entity;
 
 import com.saha7pritam.razorpay.common.enums.Environment;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 
 import java.util.UUID;
 
@@ -26,7 +23,8 @@ public class ApiKey {
     @Column(nullable = false, length = 200)
     private String keySecretHash;
 
-    @Enumerated(EnumType.STRING, length = 20)
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, length = 20)
     private Environment environment; // "sandbox" or "production"
 
 
