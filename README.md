@@ -1,0 +1,2 @@
+- The 4 compartments [merchant, operations, payment, vault] can be allocated to different teams when we need to migrate to Microservices from Monolith.
+- same code which will be used by all can be in the same package like [ enums & exception ].
