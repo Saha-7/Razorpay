@@ -2,12 +2,17 @@ package com.saha7pritam.razorpay.merchant.entity;
 
 import com.saha7pritam.razorpay.common.enums.UserRole;
 import jakarta.persistence.*;
-import org.hibernate.annotations.Fetch;
+import lombok.*;
 
 import java.util.UUID;
 
 @Entity
 @Table(name = "app_user")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class AppUser {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
