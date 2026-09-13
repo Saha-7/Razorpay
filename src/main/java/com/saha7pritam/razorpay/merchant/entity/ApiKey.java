@@ -35,6 +35,7 @@ public class ApiKey {
 
 
     @Column(nullable = false)
+    @Builder.Default
     private boolean enabled = true;
 
 
