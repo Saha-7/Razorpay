@@ -15,6 +15,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.UUID;
 
@@ -22,6 +23,7 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 @Slf4j
+@Transactional(readOnly = true)
 public class ApiKeyServiceImpl implements ApiKeyService {
 
     private final MerchantRepository merchantRepository;
@@ -77,7 +79,24 @@ public class ApiKeyServiceImpl implements ApiKeyService {
     }
 
     @Override
-    public ApiKeyCreateResponse rotateKey(UUID merchantId, UUID keyId) {
-        return null;
+    public ApiKeyCreateResponse rotate(UUID merchantId, UUID keyId) {
+        ApiKey apiKey = apiKeyRepository.findById(keyId)
+                .filter(k -> k.getMerchant().getId().equals(merchantId))
+                .orElseThrow(() -> new ResourceNotFoundException("ApiKey", keyId));
+
+        String newKeySecret = RandomizerUtil.randonBase64(40);
+        apiKey.setPreviouskeySecretHash(apiKey.getKeySecretHash());
+        apiKey.setKeySecretHash(newKeySecret);
+        apiKey.setRotatedAt(LocalDateTime.now());
+        apiKey.setGracePeriodsExpiresAt(LocalDateTime.now().plusHours(24)); // 1 day grace period
+
+        apiKey =  apiKeyRepository.save(apiKey);
+
+        return new ApiKeyCreateResponse(
+                apiKey.getId(),
+                apiKey.getKeyId(),
+                newKeySecret,
+                apiKey.getEnvironment()
+        );
     }
 }
