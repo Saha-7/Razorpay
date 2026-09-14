@@ -3,6 +3,7 @@ package com.saha7pritam.razorpay.payment.entity;
 import com.saha7pritam.razorpay.common.entity.Money;
 import com.saha7pritam.razorpay.common.enums.OrderStatus;
 import jakarta.persistence.*;
+import lombok.*;
 import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.type.SqlTypes;
 
@@ -13,6 +14,11 @@ import java.util.UUID;
 
 @Entity
 @Table(name = "order_record")
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@Builder
 public class OrderRecord {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -24,11 +30,15 @@ public class OrderRecord {
     @Embedded
     private Money amount;
 
+    @Column(length = 100)
+    private String receipt;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private OrderStatus orderStatus;
 
     @Column(nullable = false)
+    @Builder.Default
     private Integer attempts=0;
 
     @JdbcTypeCode((SqlTypes.JSON))       // This annotation specifies that the field should be treated as a JSON type in the database. It is used to map the Java Map<String, Object> to a JSON column in the database. This is particularly useful when you want to store structured data that doesn't fit neatly into a relational schema.

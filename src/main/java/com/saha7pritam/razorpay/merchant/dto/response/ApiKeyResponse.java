@@ -5,12 +5,13 @@ import com.saha7pritam.razorpay.common.enums.Environment;
 import java.time.LocalDateTime;
 import java.util.UUID;
 
-public record ApiKeyCreateResponse(
+public record ApiKeyResponse(
         UUID id,
-        String KeyId,
-        String KeySecret,
-        Environment environment
-) {
-
+        String keyId,
+        Environment environment,
+        boolean enabled,
+        LocalDateTime lastUsedAt,
+        LocalDateTime createdAt
+){
 
 }
